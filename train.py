@@ -22,6 +22,11 @@ import torch.nn.functional as F
 import numpy as np
 from apex import amp
 import time
+import torch, gc
+
+gc.collect()
+torch.cuda.empty_cache()
+
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 cudnn.deterministic = True
@@ -31,8 +36,8 @@ ckpt_path = './models'
 exp_name = 'TVSD'
 
 args = {
-    'max_epoch': 12,
-    'train_batch_size': 5,
+    'max_epoch': 10,
+    'train_batch_size': 3,
     'last_iter': 0,
     'finetune_lr': 5e-5,
     'scratch_lr': 5e-4,
@@ -43,7 +48,7 @@ args = {
     'multi-scale': None,
     'gpu': '0,1',
     'multi-GPUs': False,
-    'fp16': True,
+    'fp16': False,
     'warm_up_epochs': 3,
     'seed': 2020
 }
@@ -58,7 +63,7 @@ if args['multi-GPUs']:
     batch_size = args['train_batch_size'] * len(args['gpu'].split(','))
 # single-GPU training
 else:
-    torch.cuda.set_device(0)
+    torch.cuda.set_device(-1)
     batch_size = args['train_batch_size']
 
 joint_transform = joint_transforms.Compose([
@@ -78,12 +83,12 @@ to_pil = transforms.ToPILImage()
 print('=====>Dataset loading<======')
 training_root = [ViSha_training_root] # training_root should be a list form, like [datasetA, datasetB, datasetC], here we use only one dataset.
 train_set = CrossPairwiseImg(training_root, joint_transform, img_transform, target_transform)
-train_loader = DataLoader(train_set, batch_size=batch_size, num_workers=8, shuffle=True)
+train_loader = DataLoader(train_set, batch_size=batch_size, num_workers=0, shuffle=True)
 print("max epoch:{}".format(args['max_epoch']))
 
 ce_loss = nn.CrossEntropyLoss()
 
-log_path = os.path.join(ckpt_path, exp_name, str(datetime.datetime.now()) + '.txt')
+log_path = os.path.join(ckpt_path, exp_name, "1129" + '.txt')
 
 def main():
     print('=====>Prepare Network {}<======'.format(exp_name))
@@ -140,6 +145,7 @@ def train(net, optimizer, scheduler):
             other, other_gt = sample['other'].cuda(), sample['other_gt'].cuda()
 
             optimizer.zero_grad()
+            torch.cuda.empty_cache()
 
             exemplar_pre, query_pre, other_pre, scene_logits = net(exemplar, query, other)
 

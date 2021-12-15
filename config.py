@@ -14,13 +14,13 @@ name: just for easy mark
 # Shadow datasets
 # SBU_training_root = ('/home/ext/chenzhihao/Datasets/SBU-shadow/SBUTrain4KRecoveredSmall', 'image', 'SBU_train')
 # SBU_testing_root = ('/home/ext/chenzhihao/Datasets/SBU-shadow/SBU-Test', 'image', 'SBU_test')
-ViSha_training_root = ('/home/ext/chenzhihao/Datasets/ViSha/train', 'video', 'ViSD_train')
-ViSha_validation_root = ('/home/ext/chenzhihao/Datasets/ViSha/test', 'video', 'ViSD_test')
+ViSha_training_root = ('/tf/VSD/ViSha/ViSha_data/train', 'video', 'ViSD_train')
+ViSha_validation_root = ('/tf/VSD/ViSha/ViSha_data/test', 'video', 'ViSD_test')
 
 
 '''
 Pretrained single model path
 '''
-# PDBM_single_path = '/home/ext/chenzhihao/code/video_shadow/models_saliency/PDBM_single_256/50000.pth'
+PDBM_single_path = '/tf/VSD/ViSha/pretained/resnext_101_32x4d.pth'
 # DeepLabV3_path = '/home/ext/chenzhihao/code/video_shadow/models/deeplabv3/20.pth'
 # FPN_path = '/home/ext/chenzhihao/code/video_shadow/models/FPN/20.pth'

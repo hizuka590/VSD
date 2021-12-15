@@ -21,8 +21,9 @@ class CrossPairwiseImg(data.Dataset):
         self.label_ext = '.png'
         self.num_video_frame = 0
         # get all frames from video datasets
-        self.videoImg_list = self.generateImgFromVideo(self.video_root)
-        print('Total video frames is {}.'.format(self.num_video_frame))
+        if len(self.video_root) > 0:
+            self.videoImg_list = self.generateImgFromVideo(self.video_root)
+            print('Total video frames is {}.'.format(self.num_video_frame))
         # get all frames from image datasets
         if len(self.img_root) > 0:
             self.singleImg_list = self.generateImgFromSingle(self.img_root)
@@ -96,14 +97,19 @@ class CrossPairwiseImg(data.Dataset):
         root = root[0]  # assume that only one video dataset
         video_list = os.listdir(os.path.join(root[0], self.input_folder))
         for video in video_list:
-            img_list = [os.path.splitext(f)[0] for f in os.listdir(os.path.join(root[0], self.input_folder, video)) if f.endswith(self.img_ext)] # no ext
-            img_list = self.sortImg(img_list)
-            for img in img_list:
-                # videoImgGt: (img, gt, video start index, video length)
-                videoImgGt = (os.path.join(root[0], self.input_folder, video, img + self.img_ext),
-                        os.path.join(root[0], self.label_folder, video, img + self.label_ext), self.num_video_frame, len(img_list))
-                imgs.append(videoImgGt)
-            self.num_video_frame += len(img_list)
+            name, ext = os.path.splitext(video)
+            if '.avi' == '.avi':
+                img_list = [os.path.splitext(f)[0] for f in os.listdir(os.path.join(root[0], self.input_folder, video))
+                            if f.endswith(self.img_ext)]  # no ext
+                img_list = self.sortImg(img_list)
+                for img in img_list:
+                    # videoImgGt: (img, gt, video start index, video length)
+                    videoImgGt = (os.path.join(root[0], self.input_folder, video, img + self.img_ext),
+                                  os.path.join(root[0], self.label_folder, video, img + self.label_ext),
+                                  self.num_video_frame, len(img_list))
+                    imgs.append(videoImgGt)
+                self.num_video_frame += len(img_list)
+
         return imgs
 
     def generateImgFromSingle(self, root):
