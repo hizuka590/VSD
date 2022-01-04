@@ -5,3 +5,4 @@ pretained/
 core.*
 *.pth
 ignore.*
+.ipynb_checkpoints
