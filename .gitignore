@@ -4,3 +4,4 @@ pretained/
 *.zip
 core.*
 *.pth
+ignore.*
