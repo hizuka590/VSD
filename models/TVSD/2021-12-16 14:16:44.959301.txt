@@ -1,0 +1,4 @@
+{'max_epoch': 12, 'train_batch_size': 2, 'last_iter': 0, 'finetune_lr': 5e-05, 'scratch_lr': 0.0005, 'weight_decay': 0.0005, 'momentum': 0.9, 'snapshot': '', 'scale': 416, 'multi-scale': None, 'gpu': '0,1', 'multi-GPUs': False, 'fp16': True, 'warm_up_epochs': 3, 'seed': 2020}
+
+iter: 2, bce1: 0.7427915, bce2: 0.7077565, bce3: 0.7096775, hinge1: 1.8482485, hinge2: 1.6870005, hinge3: 2.3776595, cla: 2.2900885, lr: 0.0000008
+iter: 3, bce1: 0.7345175, bce2: 0.7098695, bce3: 0.7119365, hinge1: 1.8590385, hinge2: 1.7638955, hinge3: 2.4819715, cla: 2.6054315, lr: 0.0000008

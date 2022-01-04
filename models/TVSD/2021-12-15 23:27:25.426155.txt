@@ -1,0 +1,2 @@
+{'max_epoch': 12, 'train_batch_size': 5, 'last_iter': 0, 'finetune_lr': 5e-05, 'scratch_lr': 0.0005, 'weight_decay': 0.0005, 'momentum': 0.9, 'snapshot': '', 'scale': 416, 'multi-scale': None, 'gpu': '0,1', 'multi-GPUs': False, 'fp16': True, 'warm_up_epochs': 3, 'seed': 2020}
+
